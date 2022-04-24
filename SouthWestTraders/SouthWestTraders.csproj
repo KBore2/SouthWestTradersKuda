@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\Data.Products\Data.Products.csproj" />
-    <ProjectReference Include="..\Data.Product\Data.Product.sql.sqlproj" />
+    <ProjectReference Include="..\Trading\Trading.csproj" />
   </ItemGroup>
 
 </Project>

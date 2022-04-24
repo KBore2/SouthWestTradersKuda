@@ -6,6 +6,7 @@ namespace Data.Products.Context
     public partial class Order
     {
         public long OrderId { get; set; }
+        public long ProductId { get; set; }
         public string Name { get; set; } = null!;
         public DateTime CreatedDateUtc { get; set; }
         public int Quantity { get; set; }

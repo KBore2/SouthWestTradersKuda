@@ -67,6 +67,7 @@ BEGIN
 	[CreatedDateUTC] Datetime2 NOT NULL,
 	[Quantity] int NOT NULL,
 	[OrderStateId] int not null,
+	[ProductId] bigint not null,
 	CONSTRAINT PK_Order_Id PRIMARY KEY ([OrderId]),
 	CONSTRAINT CK_Order_Name CHECK (len([Name])>(0)),
 	CONSTRAINT [UQ_IX_Order_Name] UNIQUE NONCLUSTERED 
@@ -76,7 +77,11 @@ BEGIN
 	CONSTRAINT [FK_Order_OrderState] FOREIGN KEY
 	(	
 		[OrderStateId] 
-	) REFERENCES [ProductsDB].[dbo].[OrderState] (OrderStateId)
+	) REFERENCES [ProductsDB].[dbo].[OrderState] (OrderStateId),
+	CONSTRAINT [FK_Order_Product] FOREIGN KEY
+	(	
+		[ProductId] 
+	) REFERENCES [ProductsDB].[dbo].[Product] (ProductId)
 	)
 END	
 GO

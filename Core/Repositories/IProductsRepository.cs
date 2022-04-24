@@ -10,7 +10,8 @@ namespace Core.Repositories
   /// <summary>
   /// Provides operations to manage products
   /// </summary>
-  internal interface IProductsRepository : IRepository<Data.Products.Context.Product>
+  public interface IProductsRepository : IRepository<Data.Products.Context.Product>
   {
+    //public IEnumerable<Data.Products.Context.Product> GetAvailableStock(long productId);
   }
 }

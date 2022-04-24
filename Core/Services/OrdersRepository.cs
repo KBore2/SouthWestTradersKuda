@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Core.Services
 {
-  internal class ProductRepository: Repository<Data.Products.Context.Product>, IProductsRepository
+  public class OrdersRepository: Repository<Data.Products.Context.Order>, IOrdersRepository
   {
-    public ProductRepository(Data.Products.Context.ProductsDBContext productsDBContext): base(productsDBContext)
+    public OrdersRepository(Data.Products.Context.ProductsDBContext productsDBContext): base(productsDBContext)
     {
     }
   }

@@ -10,8 +10,16 @@ namespace Core.Services
 {
   public class StockRepository: Repository<Data.Products.Context.Stock>, IStockRepository
   {
+    private readonly Data.Products.Context.ProductsDBContext _productsDBContext;
     public StockRepository(Data.Products.Context.ProductsDBContext productsDBContext): base(productsDBContext)
     {        
+      _productsDBContext = productsDBContext;
+    }
+
+    public Data.Products.Context.Stock GetAvailableStock(long productId)
+    {
+      var availableStock = _productsDBContext.Stocks.Where(x => x.ProductId == productId).FirstOrDefault();
+      return availableStock;
     }
   }
 }

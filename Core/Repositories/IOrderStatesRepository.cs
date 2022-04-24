@@ -10,7 +10,7 @@ namespace Core.Repositories
   /// <summary>
   /// Provides operations to manage order state
   /// </summary>
-  internal interface IOrderStatesRepository: IRepository<Data.Products.Context.OrderState>
+  public interface IOrderStatesRepository: IRepository<Data.Products.Context.OrderState>
   {
   }
 }

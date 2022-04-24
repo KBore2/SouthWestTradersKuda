@@ -10,7 +10,7 @@ namespace Core.Repositories
   /// <summary>
   /// Provides operations to manage orders
   /// </summary>
-  internal interface IOrdersRepository: IRepository<Data.Products.Context.Order>
+  public interface IOrdersRepository: IRepository<Data.Products.Context.Order>
   {
   }
 }
