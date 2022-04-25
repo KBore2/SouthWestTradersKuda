@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Core.Mapper
 {
+  /// <summary>
+  /// Provides operations to manage mapping profiles
+  /// </summary>
   public class MapperProfile: Profile
   {
     public MapperProfile()

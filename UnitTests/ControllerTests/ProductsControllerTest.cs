@@ -21,7 +21,7 @@ namespace UnitTests.ControllerTests
     private readonly Mock<IStockRepository> _stockRepositoryMock;
     private readonly IMapper _mapper;    
     private readonly MapperMock _mapperMock;    
-    private readonly ProductsDbEntities _productsDbEntities;
+    private readonly ProductsDbEntitiesMock _productsDbEntities;
    
     public ProductsControllerTest()
     {
@@ -29,7 +29,7 @@ namespace UnitTests.ControllerTests
       _productsRepositoryMock = new Mock<IProductsRepository>();
       _stockRepositoryMock = new Mock<IStockRepository>();
       _mapperMock = new MapperMock();
-      _productsDbEntities = new ProductsDbEntities();      
+      _productsDbEntities = new ProductsDbEntitiesMock();      
 
       _mapper = _mapperMock.GetMapper();
 

@@ -2,6 +2,7 @@
 using Core.Models;
 using Core.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,12 @@ using System.Threading.Tasks;
 
 namespace Trading.Controllers
 {
-  [ApiController]
+  /// <summary>
+  /// Provides operations to manage orders
+  /// </summary>
+  [ApiController]  
+  [SwaggerTag("Provides operations to manage products")]
+  [Produces("application/json")]
   [Route("[controller]")]
   public class ProductsController: ControllerBase
   {
@@ -43,6 +49,11 @@ namespace Trading.Controllers
       return _mapper.Map<IEnumerable<Product>>(products);
     }
 
+    /// <summary>
+    /// Retrieves the specified product
+    /// </summary>
+    /// <param name="productId"></param>
+    /// <returns></returns>
     [HttpGet("{productId}")]
     public Product Get(long productId)
     {
@@ -50,6 +61,11 @@ namespace Trading.Controllers
       return _mapper.Map<Product>(products);
     }
 
+    /// <summary>
+    /// Creates a product
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
     [HttpPost]
     public IActionResult Post([FromBody] Product model)
     {
@@ -72,6 +88,11 @@ namespace Trading.Controllers
       return Ok(product);
     }
 
+    /// <summary>
+    /// Deletes a product
+    /// </summary>
+    /// <param name="productId"></param>
+    /// <returns></returns>
     [HttpDelete("{productId}")]
     public IActionResult Delete(long productId)
     {
@@ -89,6 +110,11 @@ namespace Trading.Controllers
       return Ok();
     }
 
+    /// <summary>
+    /// Searches product by name
+    /// </summary>
+    /// <param name="productName"></param>
+    /// <returns></returns>
     [HttpGet("SearchByName/{productName}")]
     public IEnumerable<Product> SearchByName(string productName)
     {
@@ -96,13 +122,25 @@ namespace Trading.Controllers
       return _mapper.Map<IEnumerable<Product>>(products);    
     }
 
+    /// <summary>
+    /// Retrieves the available stock for the speficied product
+    /// </summary>
+    /// <param name="productId"></param>
+    /// <returns></returns>
+
     [HttpGet("AvailableStock/{productId}")]
     public Stock AvailableStock(long productId)
     {
       var products = _stockRepository.GetAvailableStock(productId);
       return _mapper.Map<Stock>(products);
     }
-
+    
+    /// <summary>
+    /// Adds stock to the specified product
+    /// </summary>
+    /// <param name="productId"></param>
+    /// <param name="quantity"></param>
+    /// <returns></returns>
     [HttpPost("AddStock/{productId}/{quantity}")]
     public IActionResult AddStock(long productId, int quantity)
     {

@@ -8,8 +8,15 @@ using System.Threading.Tasks;
 
 namespace Core.Services
 {
+  /// <summary>
+  /// Provides operations to manage orders
+  /// </summary>
   public class OrdersRepository: Repository<Data.Products.Context.Order>, IOrdersRepository
   {
+    /// <summary>
+    /// Initialises the constructor
+    /// </summary>
+    /// <param name="productsDBContext"></param>
     public OrdersRepository(Data.Products.Context.ProductsDBContext productsDBContext): base(productsDBContext)
     {
     }

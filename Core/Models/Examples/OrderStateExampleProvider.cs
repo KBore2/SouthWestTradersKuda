@@ -20,8 +20,7 @@ namespace Core.Models.Examples
     return new OpenApiObject
     {
       ["orderStateId"] = new OpenApiInteger(3),     
-      ["state"] = new OpenApiString("Completed"),
-    
+      ["state"] = new OpenApiString("Completed")    
     };
   }
 }

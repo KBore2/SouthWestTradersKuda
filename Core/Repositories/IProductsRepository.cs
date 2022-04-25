@@ -11,7 +11,6 @@ namespace Core.Repositories
   /// Provides operations to manage products
   /// </summary>
   public interface IProductsRepository : IRepository<Data.Products.Context.Product>
-  {
-    //public IEnumerable<Data.Products.Context.Product> GetAvailableStock(long productId);
+  {   
   }
 }

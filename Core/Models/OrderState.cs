@@ -8,10 +8,20 @@ using System.Threading.Tasks;
 
 namespace Core.Models
 {
+  /// <summary>
+  /// Represents an order state
+  /// </summary>
   [SwaggerSchemaFilter(typeof(OrderStateExampleProvider))]
   public class OrderState
   {  
+    /// <summary>
+    /// Gets or sets the order state identifier
+    /// </summary>
     public int OrderStateId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the state
+    /// </summary>
     public string State { get; set; } = null!;
 
   }

@@ -2,6 +2,7 @@
 using Core.Models;
 using Core.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,13 @@ using System.Threading.Tasks;
 
 namespace Trading.Controllers
 {
+
   /// <summary>
   /// Provides operations to manage order states
   /// </summary>
   [ApiController]
+  [SwaggerTag("Provides operations to manage order states")]
+  [Produces("application/json")]
   [Route("[controller]")]
   public class OrderStatesController: ControllerBase
   {
@@ -21,9 +25,10 @@ namespace Trading.Controllers
     private readonly IMapper _mapper;
 
     /// <summary>
-    /// Provides operations to manage order states
+    /// Initialises the constructor
     /// </summary>
     /// <param name="orderStatesRepository"></param>
+    /// <param name="mapper"></param>
     public OrderStatesController(IOrderStatesRepository orderStatesRepository, IMapper mapper)
     {
       _orderStatesRepository = orderStatesRepository;

@@ -21,7 +21,6 @@ builder.Services.AddScoped(typeof(IOrderStatesRepository), typeof(OrderStatesRep
 
 builder.Services.AddScoped(typeof(IDatabaseTransaction<>), typeof(ProductsDatabaseTransaction<>));
 
-//builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddAutoMapper(Assembly.Load("Core"));
 
 builder.Services.AddEndpointsApiExplorer();
@@ -31,16 +30,20 @@ builder.Services.AddSwaggerGen(options =>
   options.SwaggerDoc("v1", new OpenApiInfo
   {
     Version = "v1",
-    Title = "SouthWestTraders",
-    Description = "Traders API"
+    Title = "South West Traders API",
+    Description = "This API simplifies order management for different products"
   });
 
+  //swagger documentation
   options.EnableAnnotations();
 
   var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
   var xmlFilenameTrading = $"{Assembly.Load("Trading").GetName().Name}.xml";
+  var xmlFilenameCore = $"{Assembly.Load("Core").GetName().Name}.xml";
+
   options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
   options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilenameTrading));
+  options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilenameCore));
 });
 
 var app = builder.Build();
@@ -52,6 +55,12 @@ if (app.Environment.IsDevelopment())
   app.UseSwaggerUI();
 }
 
+app.UseReDoc(options =>
+{
+  options.DocumentTitle = "South West Traders API";
+  options.SpecUrl = "/swagger/v1/swagger.json";
+});
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
@@ -59,13 +68,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-
-//static string XmlCommentsFilePath
-//{
-//  get
-//  {
-//    var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-//    return basePath;
-//  }
-//}

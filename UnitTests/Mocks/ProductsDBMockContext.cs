@@ -12,10 +12,10 @@ namespace UnitTests.Mocks
 {
   public class ProductsDBMockContext : DbContextMockBase<Data.Products.Context.ProductsDBContext>
   {
-    private readonly ProductsDbEntities _productsDbEntities;
+    private readonly ProductsDbEntitiesMock _productsDbEntities;
     public ProductsDBMockContext()
     {
-      _productsDbEntities = new ProductsDbEntities();
+      _productsDbEntities = new ProductsDbEntitiesMock();
     }
     public override Data.Products.Context.ProductsDBContext GetDbContext()
     {

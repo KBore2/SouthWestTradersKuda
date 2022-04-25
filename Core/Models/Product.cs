@@ -15,9 +15,24 @@ namespace Core.Models
   [SwaggerSchemaFilter(typeof(ProductExampleProvider))]
   public class Product
   {
+    /// <summary>
+    /// Gets or sets the product identifier
+    /// </summary>
     public long ProductId { get; set; }
-    public string Name { get; set; } = null!;
-    public string Description { get; set; } = null!;
+
+    /// <summary>
+    /// Gets or sets the name
+    /// </summary>
+    public string? Name { get; set; }
+
+    /// <summary>
+    /// Gets or sets the description
+    /// </summary>
+    public string? Description { get; set; }
+
+    /// <summary>
+    /// Gets or sets the price
+    /// </summary>
     public decimal Price { get; set; }
   }
 }

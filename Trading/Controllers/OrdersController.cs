@@ -3,6 +3,7 @@ using Core.Models;
 using Core.Repositories;
 using Core.Transactions;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,12 @@ using System.Threading.Tasks;
 
 namespace Trading.Controllers
 {
+  /// <summary>
+  /// Provides operations to manage orders
+  /// </summary>
+  [ApiController]
+  [SwaggerTag("Provides operations to manage orders")]
+  [Produces("application/json")]
   [Route("[controller]")]
   public class OrdersController : ControllerBase
   {
@@ -21,6 +28,15 @@ namespace Trading.Controllers
     private readonly IDatabaseTransaction<Data.Products.Context.ProductsDBContext> _databaseTransaction;
     private readonly IMapper _mapper;
 
+    /// <summary>
+    /// Initialises the constructor
+    /// </summary>
+    /// <param name="ordersRepository"></param>
+    /// <param name="productsRepository"></param>
+    /// <param name="orderStatesRepository"></param>
+    /// <param name="stockRepository"></param>
+    /// <param name="databaseTransaction"></param>
+    /// <param name="mapper"></param>
     public OrdersController(IOrdersRepository ordersRepository, IProductsRepository productsRepository, IOrderStatesRepository orderStatesRepository, IStockRepository stockRepository, IDatabaseTransaction<Data.Products.Context.ProductsDBContext> databaseTransaction, IMapper mapper)
     {
       _ordersRepository = ordersRepository;
@@ -31,6 +47,10 @@ namespace Trading.Controllers
       _mapper = mapper;
     }
 
+    /// <summary>
+    /// Retrieves a set of orders
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IEnumerable<Order> Get()
     {
@@ -38,6 +58,11 @@ namespace Trading.Controllers
       return _mapper.Map<IEnumerable<Order>>(orders);
     }
 
+    /// <summary>
+    /// Retrieves the specified order
+    /// </summary>
+    /// <param name="orderId"></param>
+    /// <returns></returns>
     [HttpGet("{orderId}")]
     public Order Get(long orderId)
     {
@@ -49,6 +74,12 @@ namespace Trading.Controllers
     /// Places an order
     /// </summary>
     /// <returns></returns>    
+    /// <remarks>
+    /// <b>Business rule violations:</b>
+    /// <br/>Invalid quantity, an order must be placed with a quantity greater than zero   
+    /// <br/>Requested quantity is more than the available stock   
+    /// <br/>Product is out of stock, order cannot be completed   
+    /// </remarks>
     [HttpPost("PlaceOrder")]
     public async Task<IActionResult> PlaceOrder([FromBody] OrderRequest model)
     {
@@ -123,7 +154,11 @@ namespace Trading.Controllers
     /// <summary>
     /// Completes an order
     /// </summary>
-    /// <returns></returns>    
+    /// <returns></returns> 
+    /// <remarks>
+    /// <b>Business rule violations:</b>
+    /// <br/>Cannot complete an order that is in a cancelled state  
+    /// </remarks>
     [HttpPost("CompleteOrder/{orderId}")]
     public IActionResult CompleteOrder(long orderId)
     {
@@ -136,7 +171,7 @@ namespace Trading.Controllers
 
       if (order.OrderStateId == (int)OrderState.Cancelled)
       {
-        return BadRequest("Business rule violation: Order is in a cancelled state");
+        return BadRequest("Business rule violation: Cannot complete an order that is in a cancelled state");
       }
 
       var orderStates = _orderStatesRepository.Find(x => x.OrderStateId == (int)OrderState.Completed).FirstOrDefault();
@@ -155,9 +190,14 @@ namespace Trading.Controllers
     }
 
     /// <summary>
-    /// Completes an order
+    /// Cancles an order
     /// </summary>
-    /// <returns></returns>    
+    /// <returns></returns>   
+    /// <remarks>
+    /// <b>Business rule violations:</b>
+    /// <br/>An order in a completed state cannot be cancelled 
+    /// </remarks>
+
     [HttpPost("CancelOrder/{orderId}")]
     public async Task<IActionResult> CancelOrder(long orderId)
     {
@@ -218,6 +258,15 @@ namespace Trading.Controllers
       return Ok();
     }
 
+    /// <summary>
+    /// Search by order by name
+    /// </summary>
+    /// <param name="orderName"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// <b>Search:</b>
+    /// <br/>Supports partial searches   
+    /// </remarks>
     [HttpGet("SearchByName/{orderName}")]
     public IEnumerable<Order> SearchByName(string orderName)
     {
@@ -225,6 +274,15 @@ namespace Trading.Controllers
       return _mapper.Map<IEnumerable<Order>>(products);
     }
 
+    /// <summary>
+    /// Search by order by date
+    /// </summary>
+    /// <param name="orderDate"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// <b>Search:</b>
+    /// <br/>This search discards the time and only uses the date. 
+    /// </remarks>
     [HttpGet("SearchByDate/{orderDate}")]
     public IEnumerable<Order> SearchByDate(DateTime orderDate)
     {

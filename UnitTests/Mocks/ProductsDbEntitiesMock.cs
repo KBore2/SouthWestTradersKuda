@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UnitTests.Mocks
 {
-  internal class ProductsDbEntities
+  internal class ProductsDbEntitiesMock
   {
     public ICollection<Data.Products.Context.Product> GetTestProducts()
     {
@@ -21,7 +21,7 @@ namespace UnitTests.Mocks
         },
         new Data.Products.Context.Product
         {
-         ProductId = 1,
+         ProductId = 2,
          Name = "Entity framework",
          Description = "Entity framework",
          Price = 250
@@ -60,7 +60,13 @@ namespace UnitTests.Mocks
          StockId = 1,
          ProductId = 1,
          AvailableStock = 100
-        }      
+        },
+        new Data.Products.Context.Stock
+        {
+         StockId = 2,
+         ProductId = 2,
+         AvailableStock = 50
+        }
       };
     }
     public ICollection<Data.Products.Context.OrderState> GetTestOrderStates()

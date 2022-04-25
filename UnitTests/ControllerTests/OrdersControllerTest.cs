@@ -25,7 +25,7 @@ namespace UnitTests.ControllerTests
     private readonly Mock<IDatabaseTransaction<Data.Products.Context.ProductsDBContext>> _databaseTransaction;
     private readonly IMapper _mapper;
     private readonly MapperMock _mapperMock;
-    private readonly ProductsDbEntities _productsDbEntities;
+    private readonly ProductsDbEntitiesMock _productsDbEntitiesMock;
 
     public OrdersControllerTest()
     {
@@ -36,26 +36,26 @@ namespace UnitTests.ControllerTests
       _ordersRepositoryMock = new Mock<IOrdersRepository>();
       _orderStatesRepositoryMock = new Mock<IOrderStatesRepository>();
       _mapperMock = new MapperMock();
-      _productsDbEntities = new ProductsDbEntities();
+      _productsDbEntitiesMock = new ProductsDbEntitiesMock();
 
       _mapper = _mapperMock.GetMapper();
 
-      _productsRepositoryMock.Setup(x => x.GetAll()).Returns(_productsDbEntities.GetTestProducts());
+      _productsRepositoryMock.Setup(x => x.GetAll()).Returns(_productsDbEntitiesMock.GetTestProducts());
       _productsRepositoryMock.Setup(x => x.Save());
-      _productsRepositoryMock.Setup(x => x.GetByKey(It.IsAny<long>())).Returns(_productsDbEntities.GetTestProducts().FirstOrDefault());
+      _productsRepositoryMock.Setup(x => x.GetByKey(It.IsAny<long>())).Returns(_productsDbEntitiesMock.GetTestProducts().FirstOrDefault());
 
-      _ordersRepositoryMock.Setup(x => x.GetAll()).Returns(_productsDbEntities.GetTestOrders());
+      _ordersRepositoryMock.Setup(x => x.GetAll()).Returns(_productsDbEntitiesMock.GetTestOrders());
       _ordersRepositoryMock.Setup(x => x.Save());
-      _ordersRepositoryMock.Setup(x => x.GetByKey(It.IsAny<long>())).Returns(_productsDbEntities.GetTestOrders().FirstOrDefault());
-      _ordersRepositoryMock.Setup(x => x.Find(It.IsAny<Expression<Func<Data.Products.Context.Order, bool>>>())).Returns(_productsDbEntities.GetTestOrders());
+      _ordersRepositoryMock.Setup(x => x.GetByKey(It.IsAny<long>())).Returns(_productsDbEntitiesMock.GetTestOrders().FirstOrDefault());
+      _ordersRepositoryMock.Setup(x => x.Find(It.IsAny<Expression<Func<Data.Products.Context.Order, bool>>>())).Returns(_productsDbEntitiesMock.GetTestOrders());
 
-      _orderStatesRepositoryMock.Setup(x => x.GetAll()).Returns(_productsDbEntities.GetTestOrderStates());   
-      _orderStatesRepositoryMock.Setup(x => x.GetByKey(It.IsAny<long>())).Returns(_productsDbEntities.GetTestOrderStates().FirstOrDefault());
-      _orderStatesRepositoryMock.Setup(x => x.Find(It.IsAny<Expression<Func<Data.Products.Context.OrderState, bool>>>())).Returns(_productsDbEntities.GetTestOrderStates());
+      _orderStatesRepositoryMock.Setup(x => x.GetAll()).Returns(_productsDbEntitiesMock.GetTestOrderStates());   
+      _orderStatesRepositoryMock.Setup(x => x.GetByKey(It.IsAny<long>())).Returns(_productsDbEntitiesMock.GetTestOrderStates().FirstOrDefault());
+      _orderStatesRepositoryMock.Setup(x => x.Find(It.IsAny<Expression<Func<Data.Products.Context.OrderState, bool>>>())).Returns(_productsDbEntitiesMock.GetTestOrderStates());
 
-      _stockRepositoryMock.Setup(x => x.GetAll()).Returns(_productsDbEntities.GetTestStock());
-      _stockRepositoryMock.Setup(x => x.GetAvailableStock(It.IsAny<long>())).Returns(_productsDbEntities.GetTestStock().FirstOrDefault());
-      _stockRepositoryMock.Setup(x => x.Find((It.IsAny<Expression<Func<Data.Products.Context.Stock, bool>>>()))).Returns(_productsDbEntities.GetTestStock());
+      _stockRepositoryMock.Setup(x => x.GetAll()).Returns(_productsDbEntitiesMock.GetTestStock());
+      _stockRepositoryMock.Setup(x => x.GetAvailableStock(It.IsAny<long>())).Returns(_productsDbEntitiesMock.GetTestStock().FirstOrDefault());
+      _stockRepositoryMock.Setup(x => x.Find((It.IsAny<Expression<Func<Data.Products.Context.Stock, bool>>>()))).Returns(_productsDbEntitiesMock.GetTestStock());
 
       _databaseTransaction.Setup(x => x.BeginTransactionAsync());
       _databaseTransaction.Setup(x => x.CommitTransactionAsync());
@@ -72,7 +72,7 @@ namespace UnitTests.ControllerTests
       //Assert
       _ordersRepositoryMock.Verify(r => r.GetAll());
       Assert.NotNull(results);
-      Assert.Equal(_productsDbEntities.GetTestOrders().Count, results.Count());
+      Assert.Equal(_productsDbEntitiesMock.GetTestOrders().Count, results.Count());
     }
 
 
@@ -107,6 +107,7 @@ namespace UnitTests.ControllerTests
 
       long orderId = 1;
       long productId = 1;
+
       //Act
       var results = controller.CompleteOrder(orderId);
 
@@ -125,6 +126,7 @@ namespace UnitTests.ControllerTests
 
       long orderId = 1;
       long productId = 1;
+
       //Act
       var results = await controller.CancelOrder(orderId);
 
@@ -150,7 +152,7 @@ namespace UnitTests.ControllerTests
 
       //Assert     
       Assert.NotNull(results);
-      Assert.Equal(_productsDbEntities.GetTestOrders().Count, results.Count());
+      Assert.Equal(_productsDbEntitiesMock.GetTestOrders().Count, results.Count());
 
 
     }

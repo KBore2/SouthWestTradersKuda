@@ -14,7 +14,14 @@ namespace Core.Models
   [SwaggerSchemaFilter(typeof(OrderRequestExampleProvider))]
   public class OrderRequest
   {
+    /// <summary>
+    /// Gets or sets the product identifier
+    /// </summary>
     public long ProductId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the quantity
+    /// </summary>
     public int Quantity { get; set; }
   }
 }
