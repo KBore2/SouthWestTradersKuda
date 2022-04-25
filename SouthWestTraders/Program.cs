@@ -3,6 +3,7 @@ using Core.Services;
 using Core.Transactions;
 using Data.Products.Context;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +25,23 @@ builder.Services.AddScoped(typeof(IDatabaseTransaction<>), typeof(ProductsDataba
 builder.Services.AddAutoMapper(Assembly.Load("Core"));
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(options =>
+{
+  options.SwaggerDoc("v1", new OpenApiInfo
+  {
+    Version = "v1",
+    Title = "SouthWestTraders",
+    Description = "Traders API"
+  });
+
+  options.EnableAnnotations();
+
+  var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+  var xmlFilenameTrading = $"{Assembly.Load("Trading").GetName().Name}.xml";
+  options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+  options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilenameTrading));
+});
 
 var app = builder.Build();
 
@@ -42,3 +59,13 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+//static string XmlCommentsFilePath
+//{
+//  get
+//  {
+//    var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+//    return basePath;
+//  }
+//}

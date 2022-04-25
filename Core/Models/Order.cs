@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Core.Models.Examples;
+using Swashbuckle.AspNetCore.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Core.Models
 {
+  [SwaggerSchemaFilter(typeof(OrderExampleProvider))]
   public class Order
   {
     public long OrderId { get; set; }

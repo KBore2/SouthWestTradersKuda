@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Core.Models.Examples;
+using Swashbuckle.AspNetCore.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +11,7 @@ namespace Core.Models
   /// <summary>
   /// Represents the order request
   /// </summary>
+  [SwaggerSchemaFilter(typeof(OrderRequestExampleProvider))]
   public class OrderRequest
   {
     public long ProductId { get; set; }

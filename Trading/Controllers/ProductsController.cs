@@ -51,7 +51,7 @@ namespace Trading.Controllers
     }
 
     [HttpPost]
-    public IActionResult Product([FromBody] Product model)
+    public IActionResult Post([FromBody] Product model)
     {
       var products = _productsRepository.GetAll();
 
