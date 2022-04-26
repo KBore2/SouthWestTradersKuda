@@ -61,7 +61,7 @@ namespace UnitTests.ControllerTests
     {
       var controller = new ProductsController(_productsRepositoryMock.Object, _stockRepositoryMock.Object, _mapper);
 
-      var product = new Product
+      var product = new ProductRequest
       {
         Name = "C# Basics",
         Description = "C# Basics",

@@ -46,12 +46,12 @@ namespace Core.Infastructure
       /// </summary>
       /// <param name="entity"></param>
 
-      void Add(TEntity entity);
+      public void Add(TEntity entity);
 
       /// <summary>
       /// Persists a range of entities
       /// </summary>
-      /// <param name="entities"></param>
+      /// <param name="entities"></param> 
       void AddRange(ICollection<TEntity> entities);
 
       /// <summary>

@@ -124,7 +124,7 @@ namespace Trading.Controllers
         var order = new Data.Products.Context.Order
         {
           ProductId = model.ProductId,
-          Name = $"{product.Name}-{product.Price}-{model.Quantity}",
+          Name = $"{product.Name}-{product.Price}-{model.Quantity}-{DateTime.UtcNow}",
           OrderStateId = orderStates.OrderStateId,
           CreatedDateUtc = DateTime.UtcNow,
           Quantity = model.Quantity

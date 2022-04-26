@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Core.Models.Examples
 {
-  internal class ProductExampleProvider : ISchemaFilter
+  internal class ProductRequestExampleProvider : ISchemaFilter
   {
     public void Apply(Microsoft.OpenApi.Models.OpenApiSchema schema, SchemaFilterContext context)
     {
@@ -18,14 +18,12 @@ namespace Core.Models.Examples
     public OpenApiObject GetExample()
     {
       return new OpenApiObject
-      {      
-        ["productId"] = new OpenApiInteger(5),      
+      {        
         ["name"] = new OpenApiString("Azure Fundamental"),
         ["description"] = new OpenApiString("An introduction to Azure"),
         ["price"] = new OpenApiDouble(150.5),
-      
+
       };
-    }
-  } 
-  
+    }  
+  }
 }

@@ -101,6 +101,33 @@ namespace UnitTests.ControllerTests
     }
 
     [Fact]
+    public async Task TestPlaceOrder_FailsWhenThereIsNoStock()
+    {
+      var controller = new OrdersController(_ordersRepositoryMock.Object, _productsRepositoryMock.Object, _orderStatesRepositoryMock.Object, _stockRepositoryMock.Object, _databaseTransaction.Object, _mapper);
+
+      var order = new OrderRequest
+      {
+        ProductId = 1,
+        Quantity = 200 // more than available
+      };
+
+      //Act
+      var results = await controller.PlaceOrder(order);
+
+      //Assert
+      _productsRepositoryMock.Verify(r => r.GetByKey(order.ProductId));
+      
+      _databaseTransaction.Verify(x => x.BeginTransactionAsync(), Times.Never);
+      _databaseTransaction.Verify(x => x.CommitTransactionAsync(), Times.Never);
+     
+      _ordersRepositoryMock.Verify(x => x.Save(), Times.Never);  
+      _stockRepositoryMock.Verify(x => x.Save(), Times.Never);
+
+      Assert.NotNull(results);
+      Assert.IsAssignableFrom<BadRequestObjectResult>(results);
+    }
+
+    [Fact]
     public void TestCompleteOrder()
     {
       var controller = new OrdersController(_ordersRepositoryMock.Object, _productsRepositoryMock.Object, _orderStatesRepositoryMock.Object, _stockRepositoryMock.Object, _databaseTransaction.Object, _mapper);

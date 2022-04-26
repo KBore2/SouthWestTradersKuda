@@ -13,6 +13,10 @@ namespace Core.Mapper
   /// </summary>
   public class MapperProfile: Profile
   {
+
+    /// <summary>
+    /// Initialises the mapping profiles
+    /// </summary>
     public MapperProfile()
     {
       //Entity -> Domain (DTO)
@@ -23,6 +27,7 @@ namespace Core.Mapper
 
       //Domain (DTO) -> Entity
       CreateMap<Product, Data.Products.Context.Product>();
+      CreateMap<ProductRequest, Data.Products.Context.Product>();
       CreateMap<Order, Data.Products.Context.Order>();
       CreateMap<Stock, Data.Products.Context.Stock>();
       CreateMap<OrderState, Data.Products.Context.OrderState>();

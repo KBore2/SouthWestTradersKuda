@@ -9,24 +9,25 @@ using System.Threading.Tasks;
 namespace Core.Models
 {
   /// <summary>
-  /// Represents stock
+  /// Represents the product request
   /// </summary>
-  [SwaggerSchemaFilter(typeof(StockExampleProvider))]
-  public class Stock
+  [SwaggerSchemaFilter(typeof(ProductRequestExampleProvider))]
+  public class ProductRequest
   {
-    /// <summary>
-    /// Gets or sets the stock identifier
-    /// </summary>
-    public long StockId { get; set; }
 
     /// <summary>
-    /// Gets or sets the product identifier
+    /// Gets or sets the name
     /// </summary>
-    public long ProductId { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
-    /// Gets or sets the available stock
+    /// Gets or sets the description
     /// </summary>
-    public int AvailableStock { get; set; }
+    public string? Description { get; set; }
+
+    /// <summary>
+    /// Gets or sets the price
+    /// </summary>
+    public decimal Price { get; set; }
   }
 }

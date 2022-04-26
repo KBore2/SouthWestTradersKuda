@@ -4,6 +4,7 @@ using Core.Transactions;
 using Data.Products.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,7 +37,7 @@ builder.Services.AddSwaggerGen(options =>
 
   //swagger documentation
   options.EnableAnnotations();
-
+  
   var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
   var xmlFilenameTrading = $"{Assembly.Load("Trading").GetName().Name}.xml";
   var xmlFilenameCore = $"{Assembly.Load("Core").GetName().Name}.xml";
@@ -52,7 +53,17 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
   app.UseSwagger();
-  app.UseSwaggerUI();
+  app.UseSwaggerUI(options =>
+  { 
+    
+    options.DocExpansion(DocExpansion.None);
+    options.DisplayRequestDuration();
+    options.DefaultModelRendering(ModelRendering.Model);
+
+    options.EnableFilter();
+    // options.DefaultModelExpandDepth(5);
+    options.DefaultModelExpandDepth(-1);
+  });
 }
 
 app.UseReDoc(options =>
