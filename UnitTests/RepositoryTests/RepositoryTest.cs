@@ -12,12 +12,12 @@ namespace UnitTests.RepositoryTests
 {
   public class RepositoryTest
   {
-    private readonly Data.Products.Context.ProductsDBContext _productsDBContext;
+   // private readonly Data.Products.Context.ProductsDBContext _productsDBContext;
     private readonly ProductsDBMockContext _productsDBMockContext;
 
     public RepositoryTest()
     {
-      _productsDBContext = new Data.Products.Context.ProductsDBContext();
+     // _productsDBContext = new Data.Products.Context.ProductsDBContext();
       _productsDBMockContext = new ProductsDBMockContext();
 
     }
@@ -105,13 +105,13 @@ namespace UnitTests.RepositoryTests
 
     }
 
-
+    
     [Fact]
     public void TestCreateDBProducts()
     {
       var dbContext = _productsDBMockContext.GetDbContext();
       var repo = new Repository<Data.Products.Context.Product>(dbContext);
-
+      
       var preProductCreationCount = dbContext.Products.Count();
 
       var product = new Data.Products.Context.Product
@@ -125,8 +125,8 @@ namespace UnitTests.RepositoryTests
       repo.Add(product);
       repo.Save();
 
-      var postProductCreationCount = dbContext.Products.Count();
-
+      var postProductCreationCount = dbContext.Products.Count();     
+      
       Assert.NotEqual(preProductCreationCount, postProductCreationCount);
       Assert.Equal(preProductCreationCount + 1, postProductCreationCount);
     }

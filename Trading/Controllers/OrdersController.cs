@@ -52,10 +52,10 @@ namespace Trading.Controllers
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<Order> Get()
+    public IEnumerable<OrderDTO> Get()
     {
       var orders = _ordersRepository.GetAll();
-      return _mapper.Map<IEnumerable<Order>>(orders);
+      return _mapper.Map<IEnumerable<OrderDTO>>(orders);
     }
 
     /// <summary>
@@ -64,10 +64,10 @@ namespace Trading.Controllers
     /// <param name="orderId"></param>
     /// <returns></returns>
     [HttpGet("{orderId}")]
-    public Order Get(long orderId)
+    public OrderDTO Get(long orderId)
     {
       var orders = _ordersRepository.GetAll();
-      return _mapper.Map<Order>(orders);
+      return _mapper.Map<OrderDTO>(orders);
     }
 
     /// <summary>
@@ -268,10 +268,10 @@ namespace Trading.Controllers
     /// <br/>Supports partial searches   
     /// </remarks>
     [HttpGet("SearchByName/{orderName}")]
-    public IEnumerable<Order> SearchByName(string orderName)
+    public IEnumerable<OrderDTO> SearchByName(string orderName)
     {
       var products = _ordersRepository.Find(x => x.Name.Contains(orderName));
-      return _mapper.Map<IEnumerable<Order>>(products);
+      return _mapper.Map<IEnumerable<OrderDTO>>(products);
     }
 
     /// <summary>
@@ -282,12 +282,13 @@ namespace Trading.Controllers
     /// <remarks>
     /// <b>Search:</b>
     /// <br/>This search discards the time and only uses the date. 
+    /// <br/>Date format YYYY-MM-DD. 
     /// </remarks>
     [HttpGet("SearchByDate/{orderDate}")]
-    public IEnumerable<Order> SearchByDate(DateTime orderDate)
+    public IEnumerable<OrderDTO> SearchByDate(DateTime orderDate)
     {
       var products = _ordersRepository.Find(x => x.CreatedDateUtc.Date == orderDate.Date);
-      return _mapper.Map<IEnumerable<Order>>(products);
+      return _mapper.Map<IEnumerable<OrderDTO>>(products);
     }
 
     /// <summary>

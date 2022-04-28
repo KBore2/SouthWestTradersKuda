@@ -116,6 +116,7 @@ VALUES
  (2, N'Cancelled'), 	 
  (3, N'Completed')
 
+
  --delete outdated order states
 DELETE [T]
 FROM [ProductsDB].[dbo].[OrderState] AS [T]
@@ -131,6 +132,7 @@ USING @OrderState AS [S]
    THEN INSERT ([OrderStateId], [State])
      VALUES([S].[OrderStateId], [S].[State]);
 
+ GRANT SELECT ON [dbo].[OrderState] TO [db_wsvOrderApi]; --DB role
 
 COMMIT TRANSACTION;
 GO

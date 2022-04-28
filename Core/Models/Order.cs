@@ -12,7 +12,7 @@ namespace Core.Models
   /// Represents an order
   /// </summary>
   [SwaggerSchemaFilter(typeof(OrderExampleProvider))]
-  public class Order
+  public class OrderDTO
   {
     /// <summary>
     /// Gets or sets the order identifier

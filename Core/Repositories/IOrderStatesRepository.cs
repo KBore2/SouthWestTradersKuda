@@ -12,5 +12,16 @@ namespace Core.Repositories
   /// </summary>
   public interface IOrderStatesRepository: IRepository<Data.Products.Context.OrderState>
   {
+    /// <summary>
+    /// Retrieves values from the cache
+    /// </summary>
+    /// <returns></returns>
+    public Task<IEnumerable<Data.Products.Context.OrderState>> GetCachedOrderStates();
+
+    /// <summary>
+    /// Retrieves the specified order state
+    /// </summary>
+    /// <returns></returns>
+    public Task<Data.Products.Context.OrderState> GetCachedOrderStatesByKey(int orderStateId);
   }
 }

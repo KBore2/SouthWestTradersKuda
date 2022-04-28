@@ -22,7 +22,7 @@ namespace Core.Models.Examples
         ["orderId"] = new OpenApiInteger(9),
         ["productId"] = new OpenApiInteger(5),
         ["orderStateId"] = new OpenApiInteger(1),
-        ["name"] = new OpenApiString("Book order"),
+        ["name"] = new OpenApiString("Book Order"),
         ["quantity"] = new OpenApiInteger(15),
         ["createdDateUTC"] = new OpenApiDateTime(DateTime.UtcNow)
       };

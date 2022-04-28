@@ -70,7 +70,7 @@ namespace UnitTests.ControllerTests
       var results = controller.Get();
 
       //Assert
-      _ordersRepositoryMock.Verify(r => r.GetAll());
+      _ordersRepositoryMock.Verify(r => r.GetAll(), Times.Once);
       Assert.NotNull(results);
       Assert.Equal(_productsDbEntitiesMock.GetTestOrders().Count, results.Count());
     }
@@ -95,6 +95,7 @@ namespace UnitTests.ControllerTests
       _ordersRepositoryMock.Verify(r => r.Save());
       _databaseTransaction.Verify(x => x.BeginTransactionAsync());
       _databaseTransaction.Verify(x => x.CommitTransactionAsync(), Times.Once);
+    //  _databaseTransaction.Verify(x => x.CommitTransactionAsync(), Times.Once);
 
       Assert.NotNull(results);
       Assert.IsAssignableFrom<OkResult>(results);

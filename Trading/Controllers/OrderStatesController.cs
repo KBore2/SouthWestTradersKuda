@@ -40,9 +40,9 @@ namespace Trading.Controllers
     /// </summary>
     /// <returns></returns> 
     [HttpGet]
-    public IEnumerable<OrderState> Get()
+    public async Task<IEnumerable<OrderState>> Get()
     {
-      var orderStates = _orderStatesRepository.GetAll();
+      var orderStates = await _orderStatesRepository.GetCachedOrderStates();
       return _mapper.Map<IEnumerable<OrderState>>(orderStates);
     }
 
@@ -50,10 +50,10 @@ namespace Trading.Controllers
     /// Retrieves the specified order state
     /// </summary>
     /// <returns></returns> 
-    [HttpGet("{id}")]
-    public OrderState Get(int id)
+    [HttpGet("{orderStateId}")]
+    public async Task<OrderState> Get(int orderStateId)
     {
-      var orderStates = _orderStatesRepository.GetByKey(id);
+      var orderStates = await _orderStatesRepository.GetCachedOrderStatesByKey(orderStateId);
       return _mapper.Map<OrderState>(orderStates);
     }   
   }

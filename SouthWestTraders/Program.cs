@@ -1,3 +1,4 @@
+using Core.Cache;
 using Core.Repositories;
 using Core.Services;
 using Core.Transactions;
@@ -21,6 +22,9 @@ builder.Services.AddScoped(typeof(IStockRepository), typeof(StockRepository));
 builder.Services.AddScoped(typeof(IOrderStatesRepository), typeof(OrderStatesRepository));
 
 builder.Services.AddScoped(typeof(IDatabaseTransaction<>), typeof(ProductsDatabaseTransaction<>));
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddTransient(typeof(IDistributedCacheRepository), typeof(DistributedCacheRepository));
 
 builder.Services.AddAutoMapper(Assembly.Load("Core"));
 
