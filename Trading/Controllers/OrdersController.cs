@@ -2,6 +2,7 @@
 using Core.Models;
 using Core.Repositories;
 using Core.Transactions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
@@ -19,6 +20,7 @@ namespace Trading.Controllers
   [SwaggerTag("Provides operations to manage orders")]
   [Produces("application/json")]
   [Route("[controller]")]
+  [Authorize]
   public class OrdersController : ControllerBase
   {
     private readonly IOrdersRepository _ordersRepository;
@@ -66,7 +68,7 @@ namespace Trading.Controllers
     [HttpGet("{orderId}")]
     public OrderDTO Get(long orderId)
     {
-      var orders = _ordersRepository.GetAll();
+      var orders = _ordersRepository.GetByKey(orderId);
       return _mapper.Map<OrderDTO>(orders);
     }
 

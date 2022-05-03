@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Core.Authorization;
 using Core.Models;
 using Core.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
@@ -18,6 +20,7 @@ namespace Trading.Controllers
   [SwaggerTag("Provides operations to manage products")]
   [Produces("application/json")]
   [Route("[controller]")]
+  [Authorize]
   public class ProductsController: ControllerBase
   {
     private readonly IProductsRepository _productsRepository;
@@ -43,6 +46,7 @@ namespace Trading.Controllers
     /// <returns></returns>
 
     [HttpGet]
+   
     public IEnumerable<Product> Get()
     {     
       var products = _productsRepository.GetAll();
@@ -57,7 +61,7 @@ namespace Trading.Controllers
     [HttpGet("{productId}")]
     public Product Get(long productId)
     {
-      var products = _productsRepository.GetAll();
+      var products = _productsRepository.GetByKey(productId);
       return _mapper.Map<Product>(products);
     }
 
@@ -67,6 +71,7 @@ namespace Trading.Controllers
     /// <param name="model"></param>
     /// <returns></returns>
     [HttpPost]
+    [Authorize(Policy = Policy.AdminAuthorizePolicy)]
     public IActionResult Post([FromBody] ProductRequest model)
     {
       var products = _productsRepository.GetAll();
@@ -94,6 +99,7 @@ namespace Trading.Controllers
     /// <param name="productId"></param>
     /// <returns></returns>
     [HttpDelete("{productId}")]
+    [Authorize(Policy = Policy.AdminAuthorizePolicy)]
     public IActionResult Delete(long productId)
     {
       var product = _productsRepository.GetByKey(productId);
@@ -142,6 +148,7 @@ namespace Trading.Controllers
     /// <param name="quantity"></param>
     /// <returns></returns>
     [HttpPost("AddStock/{productId}/{quantity}")]
+    [Authorize(Policy = Policy.AdminAuthorizePolicy)]
     public IActionResult AddStock(long productId, int quantity)
     {
       var availableStock = _stockRepository.GetAvailableStock(productId);

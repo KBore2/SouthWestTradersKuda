@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Core.Authorization;
 using Core.Models;
 using Core.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
@@ -19,6 +21,7 @@ namespace Trading.Controllers
   [SwaggerTag("Provides operations to manage order states")]
   [Produces("application/json")]
   [Route("[controller]")]
+  [Authorize]
   public class OrderStatesController: ControllerBase
   {
     private readonly IOrderStatesRepository _orderStatesRepository;
